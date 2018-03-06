@@ -53,18 +53,50 @@ namespace NetCoreForce.Client.BulkApi
 
             return uri;
         }
-
+        
         /// <summary>
         /// Get All Jobs
         /// </summary>
-        public static Uri GetAllJobsUrl(string instanceUrl, string apiVersion)
+        /// <param name="instanceUrl">SFDC instance URL, e.g. "https://na99.salesforce.com"</param>
+        /// <param name="apiVersion">SFDC API version, e.g. "v41.0"</param>
+        /// <param name="concurrencyMode">Optional. Filters jobs based on concurrency mode.</param>
+        /// <param name="isPkChunkingEnabled">Optional. If set to true, filters jobs with PK chunking enabled.</param>
+        /// <param name="jobType">Optional. Filters jobs based on job type</param>
+        /// <param name="queryLocator">Optional. Use queryLocator with a locator value to get a specific set of job results. Get All Jobs returns up to 1000 result rows per request, along with a nextRecordsUrl value that contains the locator value used to get the next set of results.</param>
+        public static Uri GetAllJobsUrl(string instanceUrl, string apiVersion,
+            ConcurrencyMode? concurrencyMode = null,
+            bool? isPkChunkingEnabled = null,
+            JobType? jobType = null,
+            string queryLocator = null)
         {
             if (string.IsNullOrEmpty(instanceUrl)) throw new ArgumentNullException("instanceUrl");
             if (string.IsNullOrEmpty(apiVersion)) throw new ArgumentNullException("apiVersion");
 
-            Uri uri = new Uri(new Uri(instanceUrl), string.Format("/services/data/{0}/jobs/ingest", apiVersion));
+            Uri baseUri = new Uri(new Uri(instanceUrl), string.Format("/services/data/{0}/jobs/ingest", apiVersion));
 
-            return uri;
+            string uri = baseUri.ToString();
+
+            if (concurrencyMode.HasValue)
+            {
+                uri = QueryHelpers.AddQueryString(uri, "concurrencyMode", concurrencyMode.ToString());
+            }
+
+            if (isPkChunkingEnabled.HasValue)
+            {
+                uri = QueryHelpers.AddQueryString(uri, "isPkChunkingEnabled", isPkChunkingEnabled.ToString());
+            }
+
+            if (jobType.HasValue)
+            {
+                uri = QueryHelpers.AddQueryString(uri, "jobType", jobType.ToString());
+            }
+
+            if (!string.IsNullOrEmpty(queryLocator))
+            {
+                uri = QueryHelpers.AddQueryString(uri, "queryLocator", queryLocator);
+            }
+
+            return new Uri(uri);
         }
 
         /// <summary>

@@ -1,6 +1,5 @@
 using NetCoreForce.Client;
 using NetCoreForce.Client.Attributes;
-using NetCoreForce.Client.BulkApi;
 using Newtonsoft.Json;
 using Xunit;
 
@@ -82,19 +81,5 @@ namespace NetCoreForce.Client.Tests
         }
 
         //TODO: test deserialize
-
-        [Fact]
-        public void EnumSerialization()
-        {
-            var obj = new CreateJobRequest();
-            obj.ColumnDelimiter = ColumnDelimiter.Caret;
-
-            string serialized = JsonSerializer.SerializeForCreate(obj);           
-
-            var ds = JsonSerializer.Deserialize<CreateJobRequest>(serialized);
-
-            Assert.True(serialized.Contains("CARET"));
-            Assert.Equal(ColumnDelimiter.Caret, ds.ColumnDelimiter);
-        }
     }
 }
