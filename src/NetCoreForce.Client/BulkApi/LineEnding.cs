@@ -1,15 +1,19 @@
+using System.Runtime.Serialization;
+
 namespace NetCoreForce.Client.BulkApi
 {
-    public static class LineEndings
+    public enum LineEnding
     {
         /// <summary>
         /// LF — linefeed character
         /// </summary>
-        public const string Lf = "LF";
+        [EnumMember(Value = "LF")]
+        Lf,
 
         /// <summary>
         /// CRLF — carriage return character followed by a linefeed character
         /// </summary>
-        public const string CrLf = "CRLF";
+        [EnumMember(Value = "CRLF")]
+        CrLf
     }
 }

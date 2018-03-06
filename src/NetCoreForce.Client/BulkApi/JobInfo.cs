@@ -1,4 +1,5 @@
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System;
 
 namespace NetCoreForce.Client.BulkApi
@@ -18,22 +19,26 @@ namespace NetCoreForce.Client.BulkApi
         /// The column delimiter used for CSV job data. The default value is COMMA
         /// Optional
         /// </summary>
-        /// <seealso cref="ColumnDelimiters"/>  
+        /// <seealso cref="NetCoreForce.Client.BulkApi.ColumnDelimiter"/>  
         [JsonProperty(PropertyName = "columnDelimiter")]
-        public string ColumnDelimiter { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
+        public ColumnDelimiter? ColumnDelimiter { get; set; }
 
         /// <summary>
         /// The concurrency mode for the job.
         /// </summary>
-        /// <seealso cref="ConcurrencyModes"/>  
+        /// <seealso cref="NetCoreForce.Client.BulkApi.ConcurrencyMode"/>  
         [JsonProperty(PropertyName = "concurrencyMode")]
-        public string ConcurrencyMode { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
+        public ConcurrencyMode? ConcurrencyMode { get; set; }
 
         /// <summary>
         /// The format of the data being processed. Only CSV is supported.
         /// </summary>
+        /// <seealso cref="NetCoreForce.Client.BulkApi.ContentType"/>  
         [JsonProperty(PropertyName = "contentType")]
-        public string ContentType { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
+        public ContentType? ContentType { get; set; }
 
         /// <summary>
         /// The URL to use for Upload Job Data requests for this job. Only valid if the job is in Open state.
@@ -67,15 +72,18 @@ namespace NetCoreForce.Client.BulkApi
         /// V2Ingest—Bulk API 2.0 job
         ///</para>
         /// </summary>
+        /// <seealso cref="NetCoreForce.Client.BulkApi.JobType"/>  
         [JsonProperty(PropertyName = "jobType")]
-        public string jobType { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
+        public JobType? JobType { get; set; }
 
         /// <summary>
         /// The line ending used for CSV job data
         /// </summary>
-        /// <seealso cref="LineEndings"/>
+        /// <seealso cref="NetCoreForce.Client.BulkApi.LineEnding"/>
         [JsonProperty(PropertyName = "lineEnding")]
-        public string LineEnding { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
+        public LineEnding? LineEnding { get; set; }
 
         /// <summary>
         /// The object type for the data being processed.
@@ -86,9 +94,10 @@ namespace NetCoreForce.Client.BulkApi
         /// <summary>
         /// The processing operation for the job
         /// </summary>
-        /// <seealso cref="Operations"/>
+        /// <seealso cref="NetCoreForce.Client.BulkApi.Operation"/>
         [JsonProperty(PropertyName = "operation")]
-        public string Operation { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
+        public Operation? Operation { get; set; }
 
         /// <summary>
         /// The current state of processing for the job
@@ -100,9 +109,10 @@ namespace NetCoreForce.Client.BulkApi
         /// Failed — The job has failed. Job data that was successfully processed isn’t rolled back.
         /// </para>
         /// </summary>
-        /// <seealso cref="JobStates"/>
+        /// <seealso cref="NetCoreForce.Client.BulkApi.JobState"/>
         [JsonProperty(PropertyName = "state")]
-        public string State { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
+        public JobState? State { get; set; }
 
         /// <summary>
         /// Date and time in the UTC time zone when the job finished.

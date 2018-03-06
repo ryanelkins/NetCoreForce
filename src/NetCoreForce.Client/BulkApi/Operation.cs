@@ -1,25 +1,31 @@
+using System.Runtime.Serialization;
+
 namespace NetCoreForce.Client.BulkApi
 {
-    public static class Operations
+    public enum Operation
     {
         /// <summary>
         /// Insert
         /// </summary>
-        public const string Insert = "insert";
+        [EnumMember(Value = "insert")]
+        Insert,
 
         /// <summary>
         /// Delete
         /// </summary>
-        public const string Delete = "delete";
+        [EnumMember(Value = "delete")]
+        Delete,
 
         /// <summary>
         /// Update
         /// </summary>
-        public const string Update = "update";
+        [EnumMember(Value = "update")]
+        Update,
 
         /// <summary>
         /// Upsert
         /// </summary>
-        public const string Upsert = "upsert";
+        [EnumMember(Value = "upsert")]
+        Upsert
     }
 }
