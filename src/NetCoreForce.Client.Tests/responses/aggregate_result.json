@@ -1,0 +1,53 @@
+{
+	"totalSize": 8,
+	"done": true,
+	"records": [{
+		"attributes": {
+			"type": "AggregateResult"
+		},
+		"MailingCountry": "CA",
+		"expr0": 1017
+	}, {
+		"attributes": {
+			"type": "AggregateResult"
+		},
+		"MailingCountry": "DE",
+		"expr0": 926
+	}, {
+		"attributes": {
+			"type": "AggregateResult"
+		},
+		"MailingCountry": "FR",
+		"expr0": 1015
+	}, {
+		"attributes": {
+			"type": "AggregateResult"
+		},
+		"MailingCountry": "France",
+		"expr0": 1
+	}, {
+		"attributes": {
+			"type": "AggregateResult"
+		},
+		"MailingCountry": "GB",
+		"expr0": 1036
+	}, {
+		"attributes": {
+			"type": "AggregateResult"
+		},
+		"MailingCountry": "US",
+		"expr0": 1004
+	}, {
+		"attributes": {
+			"type": "AggregateResult"
+		},
+		"MailingCountry": "USA",
+		"expr0": 2
+	}, {
+		"attributes": {
+			"type": "AggregateResult"
+		},
+		"MailingCountry": null,
+		"expr0": 16
+	}]
+}
