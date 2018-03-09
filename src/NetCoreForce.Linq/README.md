@@ -23,3 +23,7 @@ The goal is to provide a way to query Salesforce objects in a LINQ like way:
                     })
                     .FirstOrDefault();
 ```
+
+Portions of this code came from the [IQToolkit](https://github.com/mattwar/iqtoolkit)
+
+NuGet Package: [NetCoreForce.Linq](https://www.nuget.org/packages/NetCoreForce.Linq/)
