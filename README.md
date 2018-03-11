@@ -19,7 +19,7 @@ Currently targeting [.NET Standard 1.6 and 2.0](https://docs.microsoft.com/en-us
 * [SampleConsole](src/SampleConsole) - A simple .NET Core console app to demonstrate the library.
 
 ### Pre-Release Projects:
-* [NetCoreForce.Linq](src/NetCoreForce.Linq) - an experimental LINQ-to-SOQL query provider
+* [NetCoreForce.Linq](src/NetCoreForce.Linq) - an experimental LINQ-to-SOQL IQueryable provider
 * [NetCoreForce.Linq.Tests](src/NetCoreForce.Linq.Tests) - LINQ Unit tests (offline/mocked) 
 
 ### NuGet Packages
