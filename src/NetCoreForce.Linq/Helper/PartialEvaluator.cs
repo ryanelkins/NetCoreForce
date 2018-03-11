@@ -9,6 +9,10 @@ using System.Reflection;
 
 namespace NetCoreForce.Linq.Helper
 {
+    /// <summary>
+    /// Rewrites an expression tree so that locally isolatable sub-expressions are evaluated 
+    /// and converted into ConstantExpression nodes.
+    /// </summary>
     public static class PartialEvaluator
     {
         /// <summary>
@@ -32,6 +36,13 @@ namespace NetCoreForce.Linq.Helper
             return Eval(expression, fnCanBeEvaluated, null);
         }
 
+        /// <summary>
+        /// Performs evaluation and replacement of independent sub-trees
+        /// </summary>
+        /// <param name="expression">The root of the expression tree.</param>
+        /// <param name="fnCanBeEvaluated">A function that decides whether a given expression node can be part of the local function.</param>
+        /// <param name="fnPostEval">A function to apply to each newly formed <see cref="ConstantExpression"/>.</param>
+        /// <returns>A new tree with sub-trees evaluated and replaced.</returns>
         public static Expression Eval(Expression expression, Func<Expression, bool> fnCanBeEvaluated, Func<ConstantExpression, Expression> fnPostEval)
         {
             if (fnCanBeEvaluated == null)
@@ -59,6 +70,10 @@ namespace NetCoreForce.Linq.Helper
 
             return expression.NodeType != ExpressionType.Parameter &&
                    expression.NodeType != ExpressionType.Lambda;
+
+            /* Original implementation
+            return expression.NodeType != ExpressionType.Parameter;
+             */
         }
 
         /// <summary>
@@ -104,7 +119,8 @@ namespace NetCoreForce.Linq.Helper
 
             private Expression Evaluate(Expression e)
             {
-                var type = e.Type;
+                Type type = e.Type;
+
                 if (e.NodeType == ExpressionType.Convert)
                 {
                     // check for unnecessary convert & strip them
@@ -114,6 +130,7 @@ namespace NetCoreForce.Linq.Helper
                         e = ((UnaryExpression)e).Operand;
                     }
                 }
+
                 if (e.NodeType == ExpressionType.Constant)
                 {
                     // in case we actually threw out a nullable conversion above, simulate it here
@@ -127,6 +144,7 @@ namespace NetCoreForce.Linq.Helper
                         return Expression.Constant(((ConstantExpression)e).Value, type);
                     }
                 }
+
                 var me = e as MemberExpression;
                 if (me != null)
                 {
@@ -139,15 +157,17 @@ namespace NetCoreForce.Linq.Helper
                         return this.PostEval(Expression.Constant(me.Member.GetValue(ce.Value), type));
                     }
                 }
+
                 if (type.GetTypeInfo().IsValueType)
                 {
                     e = Expression.Convert(e, typeof(object));
                 }
-                var lambda = Expression.Lambda<Func<object>>(e);
+
+                Expression<Func<object>> lambda = Expression.Lambda<Func<object>>(e);
 #if NOREFEMIT
                 Func<object> fn = ExpressionEvaluator.CreateDelegate(lambda);
 #else
-                var fn = lambda.Compile();
+                Func<object> fn = lambda.Compile();
 #endif
                 return this.PostEval(Expression.Constant(fn(), type));
             }
@@ -171,7 +191,7 @@ namespace NetCoreForce.Linq.Helper
 
             internal static HashSet<Expression> Nominate(Func<Expression, bool> fnCanBeEvaluated, Expression expression)
             {
-                var nominator = new Nominator(fnCanBeEvaluated);
+                Nominator nominator = new Nominator(fnCanBeEvaluated);
                 nominator.Visit(expression);
                 return nominator.candidates;
             }
@@ -185,7 +205,7 @@ namespace NetCoreForce.Linq.Helper
             {
                 if (expression != null)
                 {
-                    var saveCannotBeEvaluated = this.cannotBeEvaluated;
+                    bool saveCannotBeEvaluated = this.cannotBeEvaluated;
                     this.cannotBeEvaluated = false;
                     base.Visit(expression);
                     if (!this.cannotBeEvaluated)

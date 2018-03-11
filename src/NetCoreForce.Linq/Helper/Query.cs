@@ -10,6 +10,7 @@ using System.Threading;
 
 namespace NetCoreForce.Linq.Helper
 {
+    //differs significantly from original implementation
    
     /// <summary>
     /// A default implementation of IQueryable for use with QueryProvider

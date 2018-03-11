@@ -8,6 +8,9 @@ namespace NetCoreForce.Linq.Helper
 {
     public static class ReflectionExtensions
     {
+        /// <summary>
+        /// Gets the value of the field or property of the instance.
+        /// </summary>
         public static object GetValue(this MemberInfo member, object instance)
         {
             switch (member.MemberType)
@@ -20,7 +23,10 @@ namespace NetCoreForce.Linq.Helper
                     throw new InvalidOperationException();
             }
         }
-
+		
+        /// <summary>
+        /// Sets the value of the field or property of the instance.
+        /// </summary>
         public static void SetValue(this MemberInfo member, object instance, object value)
         {
             switch (member.MemberType)
