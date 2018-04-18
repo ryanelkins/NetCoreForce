@@ -1,5 +1,10 @@
 # Changelog
 
+### 2018-04-17 v2.2.0
+
+* Add optional parameter on CreateRecord and UpdateRecord to include custom headers. the HeaderFormatter class can be used to include some standard SFDC options, e.g. HeaderFormatter.SforceAutoAssign(false) to set the Assignment Rule Header for Case objects.
+* Keeping QuerySingle<T> method and behavior of returning null on no results, no longer marked as obsolete
+
 ### 2018-03-08 v2.1.0
 
 * Exposed ForceClient.QueryAsyncEnumerator that returns IAsyncEnumerator<T>
